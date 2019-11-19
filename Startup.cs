@@ -1,4 +1,5 @@
-using FreeTime.Core;
+using FreeTime.Core.Calendar;
+using FreeTime.Core.Schedule;
 using FreeTime.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,7 +25,7 @@ namespace FreeTime
         {
             services.Configure<ExchangeOptions>(Configuration.GetSection("Exchange"));
             services.AddControllers();
-            services.AddTransient<IScheduleBuilder, ScheduleBuilder>();
+            services.AddTransient<IScheduleBuilderFactory, ScheduleBuilderFactory>();
             services.AddTransient<ICalendarClientFactory, CalendarClientFactory>();
 
             services.AddHttpClient("exchange", client =>
