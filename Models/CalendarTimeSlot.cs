@@ -2,21 +2,17 @@
 
 namespace FreeTime.Models
 {
-    public class TimeSlot
+    public class CalendarTimeSlot
     {
         public DateTime Start { get; private set; }
         public DateTime End { get; private set; }
-        
-        public TimeSlot(DateTime start, DateTime end)
+        public string Calendar { get; set; }
+
+        public CalendarTimeSlot(DateTime start, DateTime end, string calendar)
         {
             Start = start;
             End = end;
-        }
-
-        public TimeSlot(TimeSlot timeSlot)
-        {
-            Start = timeSlot.Start;
-            End = timeSlot.End;
+            Calendar = calendar;
         }
     }
 }
