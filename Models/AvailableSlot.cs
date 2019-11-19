@@ -2,21 +2,17 @@
 
 namespace FreeTime.Models
 {
-    public class TimeSlot
+    public class AvailableSlot
     {
         public DateTime Start { get; private set; }
         public DateTime End { get; private set; }
-        
-        public TimeSlot(DateTime start, DateTime end)
+        public bool IsAvailable { get; set; }
+
+        public AvailableSlot(DateTime start, DateTime end, bool isAvailable)
         {
             Start = start;
             End = end;
-        }
-
-        public TimeSlot(TimeSlot timeSlot)
-        {
-            Start = timeSlot.Start;
-            End = timeSlot.End;
+            IsAvailable = isAvailable;
         }
     }
 }

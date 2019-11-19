@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FreeTime.Core;
+using FreeTime.Core.Schedule;
 using FreeTime.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,18 +11,19 @@ namespace FreeTime.Controllers
     [ApiController]
     public class CalendarController : ControllerBase
     {
-        private readonly IScheduleBuilder _scheduleBuilder;
+        private readonly IScheduleBuilderFactory _scheduleBuilderFactory;
 
-        public CalendarController(IScheduleBuilder scheduleBuilder)
+        public CalendarController(IScheduleBuilderFactory scheduleBuilderFactory)
         {
-            _scheduleBuilder = scheduleBuilder;
+            _scheduleBuilderFactory = scheduleBuilderFactory;
         }
 
         // GET: api/Calendar
         [HttpGet("{targetDate:datetime}")]
-        public async Task<ActionResult<List<TimeSlot>>> Get(DateTime targetDate, [FromQuery] TimeSlotParameters parameters)
+        public async Task<ActionResult<List<CalendarTimeSlot>>> Get(DateTime targetDate, [FromQuery] TimeSlotParameters parameters, [FromQuery] string distributionStrategy)
         {
-            var timeSlots = await _scheduleBuilder.GetAvailableTimeSlots(targetDate, parameters);
+            var sbFactory = _scheduleBuilderFactory.GetScheduleBuilder(distributionStrategy);
+            var timeSlots = await sbFactory.GetAvailableTimeSlots(targetDate, parameters);
 
             return Ok(timeSlots);
         }
