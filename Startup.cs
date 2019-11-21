@@ -34,12 +34,8 @@ namespace FreeTime
                 client.DefaultRequestHeaders.Add("prefer", $"outlook.timezone=\"{timeZone}\"");
             }).ConfigurePrimaryHttpMessageHandler(() =>
             {
-                var config = new ConfigurationBuilder().AddEnvironmentVariables("FREETIME_").Build().GetSection("Credentials");
-                var opt = new CredentialsOptions();
-                config.Bind(opt);
-
                 var handler = new HttpClientHandler();
-                var creds = new NetworkCredential(opt.UserName, opt.Password, opt.Domain);
+                var creds = new NetworkCredential(Configuration["Credentials:UserName"], Configuration["Credentials:Password"], Configuration["Credentials:Domain"]);
                 handler.Credentials = creds;
 
                 return handler;
